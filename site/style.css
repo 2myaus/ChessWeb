@@ -4,7 +4,7 @@
     flex-direction: column-reverse;
     --dark-color: #444;
     --light-color: #aaa;
-    border: 4px solid var(--dark-color);
+    border: 4px solid black;
 }
 
 .board > .row{
@@ -42,4 +42,20 @@
 
 .board > .row:nth-child(odd) > .square:nth-child(even){
     background-color: var(--light-color);
+}
+
+.square.target::after{
+    content:"";
+    background-color: #00000080;
+    display: block;
+    width:100%;
+    height:100%;
+}
+
+.square.possible-move::after{
+    content:"";
+    background-color: #ff000080;
+    display: block;
+    width:100%;
+    height:100%;
 }

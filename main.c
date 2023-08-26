@@ -47,10 +47,10 @@ chesscat_EColor chessweb_get_color_to_move(chesscat_Game *game){
     return game->position.to_move;
 }
 
-chesscat_Move *chessweb_get_possible_moves_from(chesscat_Game *game, uint8_t row, uint8_t col){
+chesscat_Move *chessweb_get_legal_moves_from(chesscat_Game *game, uint8_t row, uint8_t col){
     chesscat_Square from_square = {.row = row, .col = col};
-    chesscat_Move *moves_buf = malloc((chesscat_get_possible_moves_from(&(game->position), from_square, NULL) + 1) * sizeof(chesscat_Move)); //TODO again make this more efficient
-    uint16_t num_moves = chesscat_get_possible_moves_from(&(game->position), from_square, moves_buf);
+    chesscat_Move *moves_buf = malloc((chesscat_get_legal_moves_from(&(game->position), from_square, NULL) + 1) * sizeof(chesscat_Move)); //TODO again make this more efficient
+    uint16_t num_moves = chesscat_get_legal_moves_from(&(game->position), from_square, moves_buf);
     chesscat_Square empty = {.col = -1, .row = -1};
     moves_buf[num_moves].from = empty;
     moves_buf[num_moves].to = empty; //To mark end of the buffer
@@ -73,6 +73,10 @@ void chessweb_play_move(chesscat_Game *game, uint8_t o_row, uint8_t o_col, uint8
     if(chesscat_is_move_legal(&(game->position), move, promote_to) && chesscat_is_move_possible(&(game->position), move)){
         chesscat_game_make_move(game, move, promote_to);
     }
+}
+
+chesscat_EPositionState chessweb_position_state(chesscat_Game *game){
+    return chesscat_get_current_state(&(game->position));
 }
 
 //Piece functions:
