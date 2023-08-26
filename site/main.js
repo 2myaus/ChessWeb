@@ -69,6 +69,9 @@ let refreshBoard;
 let clickSquare;
 
 function resetGame(){
+    if(game){
+        chessweb.disposeGame(game);
+    }
     game = chessweb.newGame();
     rules = chessweb.getGameRules(game);
 
