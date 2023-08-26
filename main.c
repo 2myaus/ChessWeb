@@ -65,6 +65,16 @@ chesscat_Move *chessweb_get_move_in_buffer(chesscat_Move *buf, uint16_t position
     return &(buf[position]);
 }
 
+void chessweb_play_move(chesscat_Game *game, uint8_t o_row, uint8_t o_col, uint8_t d_row, uint8_t d_col, chesscat_EPieceType promote_to){
+    chesscat_Square from = {.row = o_row, .col = o_col};
+    chesscat_Square to = {.row = d_row, .col = d_col};
+    chesscat_Move move = {.from = from, .to = to};
+
+    if(chesscat_is_move_legal(&(game->position), move, promote_to) && chesscat_is_move_possible(&(game->position), move)){
+        chesscat_game_make_move(game, move, promote_to);
+    }
+}
+
 //Piece functions:
 
 chesscat_EColor chessweb_get_piece_color(chesscat_Piece *piece){

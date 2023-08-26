@@ -6,7 +6,7 @@ chessweb.Color = {
     Green: Symbol("Green"),
     Red: Symbol("Red")
 }
-chessweb.Color.FromInt = [
+chessweb.Color.ByInt = [
     chessweb.Color.White, chessweb.Color.Black, chessweb.Color.Green, chessweb.Color.Red //0-1-2-3
 ]
 
@@ -19,7 +19,7 @@ chessweb.PieceType = {
     Knight: Symbol("Knight"),
     Bishop: Symbol("Bishop")
 }
-chessweb.PieceType.FromInt = [
+chessweb.PieceType.ByInt = [
     chessweb.PieceType.Empty, chessweb.PieceType.Pawn, chessweb.PieceType.King, chessweb.PieceType.Queen, chessweb.PieceType.Rook, chessweb.PieceType.Knight, chessweb.PieceType.Bishop
 ]
 
@@ -43,14 +43,14 @@ chessweb.getGameRules = (game) => {
 },
 
 chessweb.getColorToMove = (game) => {
-    return chessweb.Color.FromInt[Module._chessweb_get_color_to_move(game)];
+    return chessweb.Color.ByInt[Module._chessweb_get_color_to_move(game)];
 },
 
 chessweb.getPieceAtSquare = (game, row, col) => {
     const piece = Module._chessweb_get_piece_at_pos(game, row, col);
     return {
-        type: chessweb.PieceType.FromInt[Module._chessweb_get_piece_type(piece)],
-        color: chessweb.Color.FromInt[Module._chessweb_get_piece_color(piece)],
+        type: chessweb.PieceType.ByInt[Module._chessweb_get_piece_type(piece)],
+        color: chessweb.Color.ByInt[Module._chessweb_get_piece_color(piece)],
         royalty: Module._chessweb_get_piece_royalty(piece)
     }
 }
@@ -82,4 +82,8 @@ chessweb.getPossibleMovesFrom = (game, row, col) => {
     }
     Module._chessweb_free_move_buffer(movebuf);
     return moves;
+}
+
+chessweb.playMove = (game, move, promotion) => {
+    Module._chessweb_play_move(game, move.from.row, move.from.col, move.to.row, move.to.col, chessweb.PieceType.ByInt.indexOf(promotion))
 }
