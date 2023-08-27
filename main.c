@@ -25,7 +25,9 @@ chesscat_Square *chessweb_get_move_destination(chesscat_Move *move){
 chesscat_Game *chessweb_new_game(){
     chesscat_Game *game_ptr = malloc(sizeof(chesscat_Game));
     chesscat_set_default_game(game_ptr);
-
+    //chesscat_set_game_to_FEN(game_ptr, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    //game_ptr->position.game_rules.capture_own = true;
+    //game_ptr->position.game_rules.sideways_pawns = true;
     return game_ptr;
 }
 
