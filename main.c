@@ -28,6 +28,8 @@ chesscat_Game *chessweb_new_game(){
     //chesscat_set_game_to_FEN(game_ptr, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     //game_ptr->position.game_rules.capture_own = true;
     //game_ptr->position.game_rules.sideways_pawns = true;
+    //game_ptr->position.game_rules.kangaroo_pawns = true;
+    //game_ptr->position.game_rules.torpedo_pawns = true;
     return game_ptr;
 }
 

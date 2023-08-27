@@ -49,9 +49,11 @@ chessweb.getGameRules = (game) => {
         ignore_checks: Module.HEAPU8[rules + 2],
         capture_own: Module.HEAPU8[rules + 3],
         sideways_pawns: Module.HEAPU8[rules + 4],
-        capture_all: Module.HEAPU8[rules + 5],
-        allow_castle: Module.HEAPU8[rules + 6],
-        allow_passant: Module.HEAPU8[rules + 7]
+        kangaroo_pawns: Module.HEAPU8[rules + 5],
+        torpedo_pawns: Module.HEAPU8[rules + 6],
+        capture_all: Module.HEAPU8[rules + 7],
+        allow_castle: Module.HEAPU8[rules + 8],
+        allow_passant: Module.HEAPU8[rules + 9]
     };
 };
 
