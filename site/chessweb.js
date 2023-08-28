@@ -41,20 +41,47 @@ chessweb.disposeGame = (game) => {
     return Module._chessweb_dispose_game(game);
 };
 
+chessweb._rules_order = [
+    "board_width",
+    "board_height",
+    "ignore_checks",
+    "capture_own",
+    "sideways_pawns",
+    "kangaroo_pawns",
+    "torpedo_pawns",
+    "capture_all",
+    "allow_castle",
+    "allow_passant"
+]
+
 chessweb.getGameRules = (game) => {
-    let rules = _chessweb_game_getrules(game);
+    let rules = Module._chessweb_game_getrules(game);
     return {
-        board_width: Module.HEAPU8[rules + 0],
-        board_height: Module.HEAPU8[rules + 1],
-        ignore_checks: Module.HEAPU8[rules + 2],
-        capture_own: Module.HEAPU8[rules + 3],
-        sideways_pawns: Module.HEAPU8[rules + 4],
-        kangaroo_pawns: Module.HEAPU8[rules + 5],
-        torpedo_pawns: Module.HEAPU8[rules + 6],
-        capture_all: Module.HEAPU8[rules + 7],
-        allow_castle: Module.HEAPU8[rules + 8],
-        allow_passant: Module.HEAPU8[rules + 9]
+        board_width: Module.HEAPU8[rules + chessweb._rules_order.indexOf("board_width")],
+        board_height: Module.HEAPU8[rules + chessweb._rules_order.indexOf("board_height")],
+        ignore_checks: Module.HEAPU8[rules + chessweb._rules_order.indexOf("ignore_checks")],
+        capture_own: Module.HEAPU8[rules + chessweb._rules_order.indexOf("capture_own")],
+        sideways_pawns: Module.HEAPU8[rules + chessweb._rules_order.indexOf("sideways_pawns")],
+        kangaroo_pawns: Module.HEAPU8[rules + chessweb._rules_order.indexOf("kangaroo_pawns")],
+        torpedo_pawns: Module.HEAPU8[rules + chessweb._rules_order.indexOf("torpedo_pawns")],
+        capture_all: Module.HEAPU8[rules + chessweb._rules_order.indexOf("capture_all")],
+        allow_castle: Module.HEAPU8[rules + chessweb._rules_order.indexOf("allow_castle")],
+        allow_passant: Module.HEAPU8[rules + chessweb._rules_order.indexOf("allow_passant")]
     };
+};
+
+chessweb.setGameRules = (game, rules) => {
+    let rules_ptr = Module._chessweb_game_getrules(game);
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("board_width")] = rules.board_width;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("board_height")] = rules.board_height;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("ignore_checks")] = rules.ignore_checks;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("capture_own")] = rules.capture_own;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("sideways_pawns")] = rules.sideways_pawns;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("kangaroo_pawns")] = rules.kangaroo_pawns;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("torpedo_pawns")] = rules.torpedo_pawns;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("capture_all")] = rules.capture_all;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("allow_castle")] = rules.allow_castle;
+    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("allow_passant")] = rules.allow_passant;
 };
 
 chessweb.getColorToMove = (game) => {

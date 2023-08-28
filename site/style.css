@@ -13,6 +13,14 @@
     height:min-content;
 }
 
+.board.flipped{
+    flex-direction: column;
+}
+
+.board.flipped > .row{
+    flex-direction: row-reverse;
+}
+
 .board .square{
     width: 100px;
     height:100px;
