@@ -55,33 +55,21 @@ chessweb._rules_order = [
 ]
 
 chessweb.getGameRules = (game) => {
+
+    const rules_obj = {};
     let rules = Module._chessweb_game_getrules(game);
-    return {
-        board_width: Module.HEAPU8[rules + chessweb._rules_order.indexOf("board_width")],
-        board_height: Module.HEAPU8[rules + chessweb._rules_order.indexOf("board_height")],
-        ignore_checks: Module.HEAPU8[rules + chessweb._rules_order.indexOf("ignore_checks")],
-        capture_own: Module.HEAPU8[rules + chessweb._rules_order.indexOf("capture_own")],
-        sideways_pawns: Module.HEAPU8[rules + chessweb._rules_order.indexOf("sideways_pawns")],
-        kangaroo_pawns: Module.HEAPU8[rules + chessweb._rules_order.indexOf("kangaroo_pawns")],
-        torpedo_pawns: Module.HEAPU8[rules + chessweb._rules_order.indexOf("torpedo_pawns")],
-        capture_all: Module.HEAPU8[rules + chessweb._rules_order.indexOf("capture_all")],
-        allow_castle: Module.HEAPU8[rules + chessweb._rules_order.indexOf("allow_castle")],
-        allow_passant: Module.HEAPU8[rules + chessweb._rules_order.indexOf("allow_passant")]
-    };
+    chessweb._rules_order.forEach((rulename, idx) => {
+        rules_obj[rulename] = Module.HEAPU8[rules + idx];
+    });
+    return rules_obj;
+
 };
 
 chessweb.setGameRules = (game, rules) => {
     let rules_ptr = Module._chessweb_game_getrules(game);
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("board_width")] = rules.board_width;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("board_height")] = rules.board_height;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("ignore_checks")] = rules.ignore_checks;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("capture_own")] = rules.capture_own;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("sideways_pawns")] = rules.sideways_pawns;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("kangaroo_pawns")] = rules.kangaroo_pawns;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("torpedo_pawns")] = rules.torpedo_pawns;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("capture_all")] = rules.capture_all;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("allow_castle")] = rules.allow_castle;
-    Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf("allow_passant")] = rules.allow_passant;
+    Object.entries(rules).forEach(([key, value]) => {
+        Module.HEAPU8[rules_ptr + chessweb._rules_order.indexOf(key)] = value; //WIP
+    });
 };
 
 chessweb.getColorToMove = (game) => {

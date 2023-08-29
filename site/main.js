@@ -65,16 +65,11 @@ function getPieceImage(piece){
 let game;
 let rules;
 
-let refreshBoard;
+let refreshBoardPieces;
 let clickSquare;
 
-function resetGame(){
-    if(game){
-        chessweb.disposeGame(game);
-    }
-    game = chessweb.newGame();
+function resetBoard(){
     rules = chessweb.getGameRules(game);
-
     board.innerHTML = "";
 
     for(let rownum = 0; rownum < rules.board_height; rownum++){
@@ -88,12 +83,78 @@ function resetGame(){
         }
     }
 
-    refreshBoard();
+    refreshBoardPieces();
+}
+
+function resetGame(){
+    if(game){
+        chessweb.disposeGame(game);
+        game = chessweb.newGame();
+    }
+    else{
+        game = chessweb.newGame();
+        refreshRules();
+    }
+
+    updateRules();
+
+    resetBoard();
+}
+
+const rules_form = document.getElementById("gamerules");
+
+rules_form.elements["submit"].onclick = () => {
+    updateRules();
+}
+
+function refreshRules(){
+    const rules = chessweb.getGameRules(game);
+
+    (Object.entries(rules)).forEach(([key, value]) => {
+        const input = rules_form.elements[key];
+        if(input.type == "checkbox"){
+            input.checked = value;
+        }
+        else if(input.type == "text"){
+            input.value = value;
+        }
+    });
+}
+
+function updateRules(){
+    const start_rules = chessweb.getGameRules(game);
+
+    const rules = {...start_rules};
+
+    rules.board_width = parseInt(rules_form.elements["board_width"].value);
+    rules.board_height = parseInt(rules_form.elements["board_height"].value);
+
+    rules.ignore_checks = (rules_form.elements["ignore_checks"].checked ? 1 : 0);
+    rules.capture_own = (rules_form.elements["capture_own"].checked ? 1 : 0);
+    rules.sideways_pawns = (rules_form.elements["sideways_pawns"].checked ? 1 : 0);
+    rules.kangaroo_pawns = (rules_form.elements["kangaroo_pawns"].checked ? 1 : 0);
+    rules.torpedo_pawns = (rules_form.elements["torpedo_pawns"].checked ? 1 : 0);
+    rules.capture_all = (rules_form.elements["capture_all"].checked ? 1 : 0);
+    rules.allow_castle = (rules_form.elements["allow_castle"].checked ? 1 : 0);
+    rules.allow_passant = (rules_form.elements["allow_passant"].checked ? 1 : 0);
+
+    if(!rules.board_width){
+        rules.board_width = start_rules.board_width;
+    }
+    if(!rules.board_height){
+        rules.board_height = start_rules.board_height;
+    }
+
+    chessweb.setGameRules(game, rules);
+
+    refreshRules();
+
+    resetBoard();
 }
 
 Module.onRuntimeInitialized = function () {
 
-    refreshBoard = () => {
+    refreshBoardPieces = () => {
         for(let rownum = 0; rownum < rules.board_height; rownum++){
             for(let col = 0; col < rules.board_width; col++){
                 const piece = chessweb.getPieceAtSquare(game, rownum, col);
@@ -157,7 +218,7 @@ Module.onRuntimeInitialized = function () {
                 };
                 chessweb.playMove(game, move);
                 setTargetSquare(null);
-                refreshBoard();
+                refreshBoardPieces();
             }
         }
     }

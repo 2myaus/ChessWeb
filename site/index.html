@@ -8,6 +8,40 @@
             <!-- Auto filled by JS -->
         </div>
         <button style="height:120px;width:120px;margin:20px;font-weight: bold;font-size: 24px;" onclick="resetGame()">Reset</button>
+        <form id="gamerules">
+            <input type="textbox" name="board_width">
+            <label for="board_width">Board Width</label><br>
+
+            <input type="textbox" name="board_height">
+            <label for="board_height">Board Height</label><br>
+
+            <input type="checkbox" name="ignore_checks">
+            <label for="ignore_checks">Ignore checks</label><br>
+
+            <input type="checkbox" name="capture_own">
+            <label for="capture_own">Capture own pieces</label><br>
+
+            <input type="checkbox" name="sideways_pawns">
+            <label for="sideways_pawns">Sideways Pawns</label><br>
+
+            <input type="checkbox" name="kangaroo_pawns">
+            <label for="kangaroo_pawns">Kangaroo Pawns</label><br>
+
+            <input type="checkbox" name="torpedo_pawns">
+            <label for="torpedo_pawns">Torpedo pawns</label><br>
+
+            <input type="checkbox" name="capture_all">
+            <label for="capture_all">Capture all pieces to win</label><br>
+
+            <input type="checkbox" name="allow_castle">
+            <label for="allow_castle">Allow castling</label><br>
+
+            <input type="checkbox" name="allow_passant">
+            <label for="allow_passant">Allow en passant</label><br>
+
+            <input type="button" name="submit" value="Set Rules">
+
+        </form>
 
         <script src="../webdemo.js"></script>
         <script src="chessweb.js"></script>
